@@ -56,7 +56,7 @@ function Calculator() {
     setDisplay(isPrime(number) ? `${number} is prime` : `${number} is not prime`);
   }
   return (
-    <div className="bg-gray-900 p-6 rounded-lg shadow-lg border-2 border-purple-500">
+    <div className="calculator p-6 rounded-lg shadow-lg border-2">
       <Display value={display} />
       <div className="grid grid-cols-4 gap-2 mt-4">
         <NumberButton onClick={() => handleNumberClick('7')}>7</NumberButton>
