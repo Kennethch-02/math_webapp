@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import OperationButton from './OperationButton'
 import NumberButton from './NumberButton'
 import Display from './Display'
@@ -7,6 +7,39 @@ function Calculator() {
   const [display, setDisplay] = useState('0')
   const [operation, setOperation] = useState(null)
   const [prevValue, setPrevValue] = useState(null)
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [isDragging, setIsDragging] = useState(false)
+  const dragRef = useRef(null)
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!isDragging) return
+      setPosition(prevPos => ({
+        x: prevPos.x + e.movementX,
+        y: prevPos.y + e.movementY
+      }))
+    }
+
+    const handleMouseUp = () => {
+      setIsDragging(false)
+    }
+
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove)
+      window.addEventListener('mouseup', handleMouseUp)
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isDragging])
+
+  const handleMouseDown = (e) => {
+    if (e.target === dragRef.current) {
+      setIsDragging(true)
+    }
+  }
 
   const handleNumberClick = (number) => {
     setDisplay(prev => prev === '0' ? number : prev + number)
@@ -56,7 +89,15 @@ function Calculator() {
     setDisplay(isPrime(number) ? `${number} is prime` : `${number} is not prime`);
   }
   return (
-    <div className="calculator p-6 rounded-lg shadow-lg border-2">
+    <div 
+      className="calculator p-6 rounded-lg shadow-lg border-2 absolute"
+      style={{ 
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        cursor: isDragging ? 'grabbing' : 'grab'
+      }}
+      onMouseDown={handleMouseDown}
+    >
+       <div ref={dragRef} className="drag-handle h-6 bg-gray-700 rounded-t-lg mb-2 cursor-move"></div>
       <Display value={display} />
       <div className="grid grid-cols-4 gap-2 mt-4">
         <NumberButton onClick={() => handleNumberClick('7')}>7</NumberButton>

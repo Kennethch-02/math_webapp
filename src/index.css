@@ -3,6 +3,30 @@
 @tailwind utilities;
 
 @layer components {
+  /* Estilos drag */
+  .drag-handle {
+    @apply cursor-move;
+  }
+
+  .neon .drag-handle {
+    @apply bg-purple-800;
+  }
+
+  .material .drag-handle {
+    @apply bg-blue-600;
+  }
+
+  .dark .drag-handle {
+    @apply bg-gray-600;
+  }
+
+  .light .drag-handle {
+    @apply bg-gray-300;
+  }
+
+  .vintage .drag-handle {
+    @apply bg-amber-800;
+  }
   /* Estilos theme-selector */
   .neon .theme-selector {
     @apply bg-purple-900 text-purple-300 border-purple-500;

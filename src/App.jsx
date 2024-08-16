@@ -7,7 +7,7 @@ function AppContent() {
   const { theme } = useTheme();
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-4 ${theme}`}>
+    <div className={`min-h-screen w-full flex items-center justify-center p-4 ${theme} relative overflow-hidden`}>
       <ThemeSelector />
       <Calculator />
     </div>
