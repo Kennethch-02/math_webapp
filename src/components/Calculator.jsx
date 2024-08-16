@@ -96,8 +96,8 @@ function Calculator() {
         cursor: isDragging ? 'grabbing' : 'grab'
       }}
       onMouseDown={handleMouseDown}
+      ref={dragRef}
     >
-       <div ref={dragRef} className="drag-handle h-6 bg-gray-700 rounded-t-lg mb-2 cursor-move"></div>
       <Display value={display} />
       <div className="grid grid-cols-4 gap-2 mt-4">
         <NumberButton onClick={() => handleNumberClick('7')}>7</NumberButton>
